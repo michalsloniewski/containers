@@ -1,6 +1,9 @@
 package pl.kurs.containers.domain;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -14,6 +17,8 @@ public class Container implements Serializable {
     private String name;
     private double maxCapacity;
     private double waterLevel;
+
+    private List<OperationEvent> operationEventsHistory;
 
     public Container() {
     }
@@ -48,6 +53,10 @@ public class Container implements Serializable {
         this.waterLevel = waterLevel;
     }
 
+    public List<OperationEvent> getOperationEventsHistory() {
+        return operationEventsHistory;
+    }
+
     public void addWater(double value) {
         boolean success;
         if (addingWaterIsPossible(value)) {
@@ -57,6 +66,7 @@ public class Container implements Serializable {
             System.out.println("You trying add too much water!");
             success = false;
         }
+        saveEvent(new OperationEvent(Timestamp.from(Instant.now()), this, OperationEvent.OperationType.DRAIN, value, success));
     }
 
     public void pourWater(Container source, double value) {
@@ -76,7 +86,12 @@ public class Container implements Serializable {
             System.out.println("You trying drain too much water!");
             success = false;
         }
+        saveEvent(new OperationEvent(Timestamp.from(Instant.now()), this, OperationEvent.OperationType.DRAIN, value, success));
 
+    }
+
+    private void saveEvent(OperationEvent operationEvent) {
+        operationEventsHistory.add(operationEvent);
     }
 
 
