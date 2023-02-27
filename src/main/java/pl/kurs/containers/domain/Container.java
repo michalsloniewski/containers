@@ -1,6 +1,7 @@
 package pl.kurs.containers.domain;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Container is a typical "java bean" class
@@ -48,6 +49,18 @@ public class Container implements Serializable {
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Container container = (Container) o;
+        return Double.compare(container.maxCapacity, maxCapacity) == 0 && Double.compare(container.waterLevel, waterLevel) == 0 && Objects.equals(name, container.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, maxCapacity, waterLevel);
+    }
 
     @Override
     public String toString() {
