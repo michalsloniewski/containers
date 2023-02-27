@@ -66,7 +66,7 @@ public class Container implements Serializable {
             System.out.println("You trying add too much water!");
             success = false;
         }
-        saveEvent(new OperationEvent(Timestamp.from(Instant.now()), this, OperationEvent.OperationType.DRAIN, value, success));
+        saveEvent(new OperationEvent(Timestamp.from(Instant.now()), this, OperationEvent.OperationType.ADD, value, success));
     }
 
     public void pourWater(Container source, double value) {
