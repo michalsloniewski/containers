@@ -48,6 +48,50 @@ public class Container implements Serializable {
         this.waterLevel = waterLevel;
     }
 
+    public void addWater(double value) {
+        boolean success;
+        if (addingWaterIsPossible(value)) {
+            waterLevel += value;
+            success = true;
+        } else {
+            System.out.println("You trying add too much water!");
+            success = false;
+        }
+    }
+
+    public void pourWater(Container source, double value) {
+        if (source.drainingWaterIsPossible(value) && this.addingWaterIsPossible(value)) {
+            source.drainWater(value);
+            this.addWater(value);
+        }
+
+    }
+
+    public void drainWater(double value) {
+        boolean success;
+        if (drainingWaterIsPossible(value)) {
+            waterLevel -= value;
+            success = true;
+        } else {
+            System.out.println("You trying drain too much water!");
+            success = false;
+        }
+
+    }
+
+
+    private boolean addingWaterIsPossible(double value) {
+        return waterLevel + value <= maxCapacity;
+    }
+
+    private boolean drainingWaterIsPossible(double value) {
+        return waterLevel - value >= 0;
+    }
+
+
+
+
+
 
     @Override
     public boolean equals(Object o) {
