@@ -3,6 +3,7 @@ package pl.kurs.containers.domain;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,16 +18,21 @@ public class Container implements Serializable {
     private String name;
     private double maxCapacity;
     private double waterLevel;
-
     private List<OperationEvent> operationEventsHistory;
 
-    public Container() {
-    }
 
-    public Container(String name, double maxCapacity, double waterLevel) {
+
+    private Container(String name, double maxCapacity, double waterLevel) {
         this.name = name;
         this.maxCapacity = maxCapacity;
         this.waterLevel = waterLevel;
+        operationEventsHistory = new ArrayList<>();
+    }
+
+    public static Container create(String name, double maxCapacity) {
+        if (maxCapacity <= 0)
+            throw new RuntimeException("Max capacity should be above 0");
+        return new Container(name, maxCapacity, 0);
     }
 
     public String getName() {
