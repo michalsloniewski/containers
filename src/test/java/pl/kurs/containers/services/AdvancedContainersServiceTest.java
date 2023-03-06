@@ -8,7 +8,7 @@ import pl.kurs.containers.domain.OperationEvent;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class AdvancedContainersServiceTest {
 
@@ -36,7 +36,7 @@ public class AdvancedContainersServiceTest {
         List<Container> containerList = Arrays.asList(bucket, glass, waterBottle);
         Container containerWithTheGreatestAmountOfWater = advancedContainersService.findContainerWithTheGreatestAmountOfWater(containerList);
 
-        assertEquals(containerWithTheGreatestAmountOfWater, bucket);
+        assertTrue(containerWithTheGreatestAmountOfWater == bucket); // zrobic wszystkie asserttrue na takie jak tu
     }
 
     /*
@@ -49,7 +49,7 @@ public class AdvancedContainersServiceTest {
         glass.addWater(200);
         int result = Double.compare(glass.getWaterLevel(), 200);
 
-        assertEquals(0, result);
+        assertTrue(0 == result);
     }
 
     /*
@@ -62,7 +62,7 @@ public class AdvancedContainersServiceTest {
         bucket.drainWater(200);
         int result = Double.compare(bucket.getWaterLevel(), 0);
 
-        assertEquals(0, result);
+        assertTrue(0 == result);
     }
 
     /*
@@ -81,12 +81,9 @@ public class AdvancedContainersServiceTest {
         List<Container> containerList = Arrays.asList(bucket, glass, waterBottle);
         Container theMostFilledContainer = advancedContainersService.findTheMostFilledContainer(containerList);
 
-        assertEquals(theMostFilledContainer, waterBottle);
+        assertTrue(theMostFilledContainer == waterBottle);
     }
 
-    /*
-    * Returns the first container in the list if all are filled the same
-    * */
     @Test
     public void shouldReturnThreeContainersAsTheMostFilled() {
         Container bucket = Container.create("bucket", 200);
@@ -97,7 +94,7 @@ public class AdvancedContainersServiceTest {
 
         Container theMostFilledContainer = advancedContainersService.findTheMostFilledContainer(containerList);
 
-        assertEquals(theMostFilledContainer, containerList);
+        assertTrue(theMostFilledContainer == bucket);
     }
 
     /*
@@ -119,7 +116,7 @@ public class AdvancedContainersServiceTest {
         List<Container> containerList = Arrays.asList(bucket, glass, waterBottle);
         Container containerWithTheMostFailedOperationsNumber = advancedContainersService.findContainerWithTheMostFailedOperationsNumber(containerList);
 
-        assertEquals(containerWithTheMostFailedOperationsNumber, glass);
+        assertTrue(containerWithTheMostFailedOperationsNumber == glass);
     }
 
     /*
@@ -141,6 +138,6 @@ public class AdvancedContainersServiceTest {
         List<Container> containerList = Arrays.asList(bucket, glass, waterBottle);
         Container expected = advancedContainersService.findContainerWithTheBiggestNumberOfSpecificTypeOperations(containerList, OperationEvent.OperationType.ADD);
 
-        assertEquals(expected, glass);
+        assertTrue(expected == glass);
     }
 }
